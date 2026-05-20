@@ -184,7 +184,7 @@ if "result_df" not in st.session_state:
 st.markdown("""
 <div class="app-header">
   <h1>🗂️ Comment <span class="accent">Bucketizer</span></h1>
-  <p>Upload an Excel file, define your categories, and get every comment classified — zero training data needed.</p>
+  <p>Upload an Excel file, define your categories, and get every comment classified</p>
 </div>
 """, unsafe_allow_html=True)
 
