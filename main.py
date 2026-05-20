@@ -15,119 +15,136 @@ st.set_page_config(
     layout="centered",
 )
 
-# ── Custom CSS ─────────────────────────────────────────────────────────────────
+
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap');
 
+/* Main font styling */
 html, body, [class*="css"] {
     font-family: 'DM Sans', sans-serif;
 }
 
-/* Main container */
+/* Main container width mapping */
 .block-container {
     max-width: 760px;
     padding-top: 2.5rem;
 }
 
-/* Header */
+/* Header Component */
 .app-header {
-    background: #0f0f0f;
-    border-radius: 14px;
-    padding: 2rem 2.2rem 1.6rem;
+    background-color: var(--secondary-background-color);
+    border-radius: 12px;
+    padding: 2rem;
     margin-bottom: 1.8rem;
-    border: 1px solid #222;
+    border: 1px solid var(--divider-color);
+    text-align: center;
 }
 .app-header h1 {
     font-family: 'DM Mono', monospace;
-    font-size: 1.55rem;
-    color: #f0f0f0;
-    margin: 0 0 0.3rem;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    margin: 0 0 0.4rem;
     letter-spacing: -0.5px;
 }
 .app-header p {
-    color: #888;
+    color: var(--text-color);
+    opacity: 0.7;
     font-size: 0.92rem;
     margin: 0;
     line-height: 1.5;
 }
-.accent { color: #7fff6e; }
+.accent { color: #1E40AF; }
+@supports (color: var(--primary-color)) {
+    .accent { color: var(--primary-color); }
+}
 
 /* Card Titles */
 .card-title {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: #999;
-    margin-bottom: 0.9rem;
-}
-
-/* Category tags */
-.tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 0.6rem; }
-.tag {
-    background: #0f0f0f;
-    color: #f0f0f0;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
-    padding: 4px 11px;
-    border-radius: 20px;
-    display: inline-block;
+    color: var(--text-color);
+    opacity: 0.6;
+    margin-bottom: 0.8rem;
 }
 
 /* Stat boxes */
-.stats-row { display: flex; gap: 10px; margin-bottom: 1.2rem; }
 .stat-box {
-    flex: 1;
-    background: #0f0f0f;
+    background-color: var(--secondary-background-color);
+    border: 1px solid var(--divider-color);
     border-radius: 10px;
-    padding: 1rem;
+    padding: 1.2rem 1rem;
     text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 .stat-num {
     font-family: 'DM Mono', monospace;
     font-size: 1.6rem;
-    color: #7fff6e;
+    font-weight: 600;
     line-height: 1;
 }
-.stat-label { font-size: 0.75rem; color: #888; margin-top: 4px; }
+.accent-num { color: #1E40AF; }
+@supports (color: var(--primary-color)) {
+    .accent-num { color: var(--primary-color); }
+}
+.stat-label { 
+    font-size: 0.75rem; 
+    color: var(--text-color); 
+    opacity: 0.6;
+    margin-top: 6px; 
+}
 
-/* Download button */
-.stDownloadButton > button {
-    width: 100%;
-    background: #0f0f0f !important;
-    color: #7fff6e !important;
-    border: none !important;
-    border-radius: 10px !important;
+/* Uniform Buttons override (Clean Mono Style) */
+.stDownloadButton > button, .stButton > button {
+    width: 100% !important;
+    background-color: var(--secondary-background-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--divider-color) !important;
+    border-radius: 8px !important;
     font-family: 'DM Mono', monospace !important;
     font-size: 0.9rem !important;
-    padding: 0.7rem !important;
+    padding: 0.6rem 1rem !important;
     font-weight: 500 !important;
-    letter-spacing: 0.02em;
-    transition: opacity 0.2s;
+    transition: all 0.2s ease;
 }
-.stDownloadButton > button:hover { opacity: 0.85 !important; }
 
-/* Run button */
-.stButton > button {
-    width: 100%;
-    background: #0f0f0f !important;
-    color: #f0f0f0 !important;
-    border: none !important;
-    border-radius: 10px !important;
-    font-family: 'DM Mono', monospace !important;
-    font-size: 0.9rem !important;
-    padding: 0.7rem !important;
+.stDownloadButton > button:hover, .stButton > button:hover {
+    background-color: var(--background-color) !important;
+    border-color: var(--text-color) !important;
 }
-.stButton > button:hover { background: #222 !important; }
 
-/* Progress */
-.stProgress > div > div { background: #7fff6e !important; }
+/* SPECIFIC BLUE RUN BUTTON STYLING (Clean Formal Blue) */
+div[data-testid="stMainBlockContainer"] div.element-container:has(button[key="run_btn"]) button {
+    background-color: #1E40AF !important; /* Formal Dark Blue */
+    color: #FFFFFF !important;            /* High-contrast crisp white text */
+    border: 1px solid #1D4ED8 !important;
+}
 
-/* Selectbox & text input clean */
-.stSelectbox, .stTextInput { margin-bottom: 0; }
+div[data-testid="stMainBlockContainer"] div.element-container:has(button[key="run_btn"]) button:hover {
+    background-color: #1D4ED8 !important; /* Slightly lighter blue on hover */
+    border-color: #3B82F6 !important;
+}
+
+div[data-testid="stMainBlockContainer"] div.element-container:has(button[key="run_btn"]) button:disabled {
+    background-color: var(--secondary-background-color) !important;
+    color: var(--text-color) !important;
+    opacity: 0.4 !important;
+    border: 1px solid var(--divider-color) !important;
+}
+
+/* Interactive feedback for delete buttons specifically */
+div[data-testid="stHorizontalBlock"] button[id^="b'rm_"] {
+    font-size: 0.8rem !important;
+    padding: 0.3rem 0.5rem !important;
+}
+
+/* Streamlit Progress Bar Alignment */
+.stProgress > div > div { background-color: #1E40AF !important; }
 </style>
 """, unsafe_allow_html=True)
+
 
 
 # ── Model cache ─────────────────────────────────────────────────────────────────
@@ -168,14 +185,15 @@ def run_bucketization(df, comment_col, categories, output_col, progress_cb):
 
 # ── Session state defaults ──────────────────────────────────────────────────────
 if "categories" not in st.session_state:
-    # st.session_state.categories = ["Billing Issue", "Delivery Problem", "Product Quality", "Customer Service", "Other"]
-    st.session_state.categories = ["Quality Issues (Frame/Lens)",
-    "Staff Assistance",
-    "Delivery issues",
-    "Pricing/Offers/Variety at store",
-    "Poor Eye Test / Vision related issues",
-    "Others",
-    "NA"]
+    st.session_state.categories = [
+        "Quality Issues (Frame/Lens)",
+        "Staff Assistance",
+        "Delivery issues",
+        "Pricing/Offers/Variety at store",
+        "Poor Eye Test / Vision related issues",
+        "Others",
+        "NA"
+    ]
 if "result_df" not in st.session_state:
     st.session_state.result_df = None
 
@@ -221,24 +239,27 @@ with st.container(border=True):
 with st.container(border=True):
     st.markdown('<div class="card-title">③ Define Categories</div>', unsafe_allow_html=True)
 
-    add_col, _ = st.columns([3, 1])
+    add_col, btn_col = st.columns([3, 1])
     with add_col:
         new_cat = st.text_input("Add a category", placeholder="e.g. Refund Request", label_visibility="collapsed")
+    with btn_col:
+        add_clicked = st.button("＋ Add")
 
-    if st.button("＋ Add Category") and new_cat.strip():
+    if add_clicked and new_cat.strip():
         cat = new_cat.strip()
         if cat not in st.session_state.categories:
             st.session_state.categories.append(cat)
         st.rerun()
 
-    # Render tags with remove buttons
+    # Render tags with remove buttons cleanly
     cats = st.session_state.categories
     if cats:
-        cols = st.columns(min(len(cats), 4))
+        st.markdown("<div style='margin-bottom: 0.5rem;'></div>", unsafe_allow_html=True)
+        cols = st.columns(3) 
         to_remove = None
         for i, cat in enumerate(cats):
-            with cols[i % 4]:
-                if st.button(f"✕  {cat}", key=f"rm_{i}", width="stretch"):
+            with cols[i % 3]:
+                if st.button(f"✕  {cat}", key=f"rm_{i}"):
                     to_remove = cat
         if to_remove:
             st.session_state.categories.remove(to_remove)
@@ -251,7 +272,8 @@ with st.container(border=True):
 st.markdown("<br>", unsafe_allow_html=True)
 ready = df is not None and len(st.session_state.categories) > 0
 
-if st.button("🚀  Run", disabled=not ready):
+# Added key="run_btn" so the CSS hooks onto this specific element perfectly
+if st.button("🚀  Run", disabled=not ready, key="run_btn"):
     st.session_state.result_df = None
     prog_bar = st.progress(0, text="Encoding comments…")
     t0 = time.time()
@@ -270,7 +292,6 @@ if st.button("🚀  Run", disabled=not ready):
     st.session_state.result_df = result
     st.session_state.elapsed = elapsed
 
-
 # ── Step 5: Results ─────────────────────────────────────────────────────────────
 if st.session_state.result_df is not None:
     result = st.session_state.result_df
@@ -279,7 +300,7 @@ if st.session_state.result_df is not None:
 
     st.markdown("---")
 
-    # Stats
+    # Stats Summary Layout
     stat_cols = st.columns(3)
     with stat_cols[0]:
         st.markdown(f'<div class="stat-box"><div class="stat-num">{len(result):,}</div><div class="stat-label">rows classified</div></div>', unsafe_allow_html=True)
@@ -288,13 +309,15 @@ if st.session_state.result_df is not None:
     with stat_cols[2]:
         st.markdown(f'<div class="stat-box"><div class="stat-num">{elapsed:.1f}s</div><div class="stat-label">processing time</div></div>', unsafe_allow_html=True)
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
     # Distribution chart
     st.markdown("**Bucket distribution**")
     st.bar_chart(counts)
 
     # Preview
     with st.expander("Preview results", expanded=False):
-        st.dataframe(result[[comment_col, output_col]].head(50), width="stretch")
+        st.dataframe(result[[comment_col, output_col]].head(50), use_container_width=True)
 
     # Download
     buf = io.BytesIO()
@@ -302,6 +325,7 @@ if st.session_state.result_df is not None:
     buf.seek(0)
     fname = (uploaded.name.replace(".xlsx", "").replace(".xls", "") if uploaded else "output") + "_bucketed.xlsx"
 
+    st.markdown("<br>", unsafe_allow_html=True)
     st.download_button(
         label="⬇  Download Bucketed Excel",
         data=buf,
