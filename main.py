@@ -251,7 +251,7 @@ with st.container(border=True):
 st.markdown("<br>", unsafe_allow_html=True)
 ready = df is not None and len(st.session_state.categories) > 0
 
-if st.button("🚀  Run Bucketization", disabled=not ready):
+if st.button("🚀  Run", disabled=not ready):
     st.session_state.result_df = None
     prog_bar = st.progress(0, text="Encoding comments…")
     t0 = time.time()
